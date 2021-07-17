@@ -31,7 +31,7 @@ public class ArtsmiaController {
     private Button btnCalcolaPercorso;
 
     @FXML
-    private ComboBox<?> boxRuolo;
+    private ComboBox<String> boxRuolo;
 
     @FXML
     private TextField txtArtista;
@@ -41,8 +41,8 @@ public class ArtsmiaController {
 
     @FXML
     void doArtistiConnessi(ActionEvent event) {
-    	txtResult.clear();
-    	txtResult.appendText("Calcola artisti connessi");
+    	String msg = model.doArtistiConnessi();
+    	txtResult.appendText(msg);
     }
 
     @FXML
@@ -54,11 +54,18 @@ public class ArtsmiaController {
     @FXML
     void doCreaGrafo(ActionEvent event) {
     	txtResult.clear();
-    	txtResult.appendText("Crea grafo");
+    	if(boxRuolo.getValue()==null) {
+    		txtResult.appendText("Seleziona una squadra");
+    		return;
+    	}
+    	String msg = model.doCreaGrafo(boxRuolo.getValue());
+    	txtResult.appendText(msg);
     }
 
     public void setModel(Model model) {
     	this.model = model;
+    	boxRuolo.getItems().clear();
+    	boxRuolo.getItems().addAll(model.getAllRole());
     }
 
     
